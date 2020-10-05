@@ -1,0 +1,77 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - azure-pipeline.yml
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      name: default
+    steps:
+    - task: TerraformInstaller@0
+      displayName: install Terraform
+      inputs:
+        terraformVersion: 0.12.28
+    - task: TerraformTaskV1@0
+      displayName: init Terraform
+      inputs:
+        provider: azurerm
+        command: init
+        workingDirectory: $(System.DefaultWorkingDirectory)/environments/CitrixEUS-sub/
+        backendServiceArm: Visual Studio Enterprise Subscription – MPN(760a0941-f66f-4158-9521-c2ef5b730f07)
+        backendAzureRmResourceGroupName: terraform-state
+        backendAzureRmStorageAccountName: entysystfstate
+        backendAzureRmContainerName: tfstate
+        backendAzureRmKey: azuredevops.tfstate
+    - task: TerraformTaskV1@0
+      displayName: Validate terraform configuration
+      inputs:
+        provider: azurerm
+        command: validate
+        workingDirectory: $(System.DefaultWorkingDirectory)/environments/CitrixEUS-sub
+      continueOnError: false
+    - task: Bash@3
+      displayName: delete .terraform directory
+      inputs:
+        targetType: inline
+        script: >
+          # Write your commands here
+
+
+          rm -rf "${SYSTEM_DEFAULTWORKINGDIRECTORY}/environments/CitrixEUS-sub/.terraform"
+    - task: Bash@3
+      displayName: delete .git directory
+      inputs:
+        targetType: inline
+        script: >
+          # Write your commands here
+
+
+          rm -rf "${SYSTEM_DEFAULTWORKINGDIRECTORY}/.git"
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: .
+        Contents: '**'
+        TargetFolder: $(Build.ArtifactStagingDirectory)/workload/
+        CleanTargetFolder: true
+        OverWrite: true
+        preserveTimestamp: true
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: release
+        publishLocation: Container
+    - task: Bash@3
+      displayName: list artifact dir
+      inputs:
+        targetType: inline
+        script: >-
+          # Write your commands here
+
+
+          tree $(Build.ArtifactStagingDirectory)
+
