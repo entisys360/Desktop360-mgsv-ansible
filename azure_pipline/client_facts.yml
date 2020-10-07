@@ -1,11 +1,17 @@
 ---
 
 client_name: 
-client_id: 
 
   - tenant_id: 
     - subscription_id: 
-    - subscription_id: 
+        workingDirectory: $(System.DefaultWorkingDirectory)/environments/CitrixEUS-sub/
+        backendServiceArm: Visual Studio Enterprise Subscription – MPN(760a0941-f66f-4158-9521-c2ef5b730f07)
+        backendAzureRmResourceGroupName: terraform-state
+        backendAzureRmStorageAccountName: entysystfstate
+        backendAzureRmContainerName: tfstate
+        backendAzureRmKey: azuredevops.tfstate
+        TargetFolder: $(Build.ArtifactStagingDirectory)/workload/
+        PathtoPublish: $(Build.ArtifactStagingDirectory)
 
 ...
 

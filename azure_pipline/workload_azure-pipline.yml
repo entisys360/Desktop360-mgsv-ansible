@@ -21,18 +21,18 @@ stages:
       inputs:
         provider: azurerm
         command: init
-        workingDirectory: $(System.DefaultWorkingDirectory)/environments/CitrixEUS-sub/
-        backendServiceArm: Visual Studio Enterprise Subscription – MPN(760a0941-f66f-4158-9521-c2ef5b730f07)
-        backendAzureRmResourceGroupName: terraform-state
-        backendAzureRmStorageAccountName: entysystfstate
-        backendAzureRmContainerName: tfstate
-        backendAzureRmKey: azuredevops.tfstate
+        workingDirectory: {{ workingDirectory }}
+        backendServiceArm: {{ backendServiceArm }}
+        backendAzureRmResourceGroupName: {{ backendAzureRmResourceGroupName }}
+        backendAzureRmStorageAccountName: {{ backendAzureRmStorageAccountName }}
+        backendAzureRmContainerName: {{ backendAzureRmContainerName }}
+        backendAzureRmKey: {{ backendAzureRmKey }}
     - task: TerraformTaskV1@0
       displayName: Validate terraform configuration
       inputs:
         provider: azurerm
         command: validate
-        workingDirectory: $(System.DefaultWorkingDirectory)/environments/CitrixEUS-sub
+        workingDirectory: {{ workingDirectory }}
       continueOnError: false
     - task: Bash@3
       displayName: delete .terraform directory
@@ -42,7 +42,7 @@ stages:
           # Write your commands here
 
 
-          rm -rf "${SYSTEM_DEFAULTWORKINGDIRECTORY}/environments/CitrixEUS-sub/.terraform"
+          rm -rf "{{SYSTEM_DEFAULTWORKINGDIRECTORY}}/environments/CitrixEUS-sub/.terraform"
     - task: Bash@3
       displayName: delete .git directory
       inputs:
@@ -51,18 +51,18 @@ stages:
           # Write your commands here
 
 
-          rm -rf "${SYSTEM_DEFAULTWORKINGDIRECTORY}/.git"
+          rm -rf "{{ SYSTEM_DEFAULTWORKINGDIRECTORY }}/.git"
     - task: CopyFiles@2
       inputs:
         SourceFolder: .
         Contents: '**'
-        TargetFolder: $(Build.ArtifactStagingDirectory)/workload/
+        TargetFolder: {{ TargetFolder }}
         CleanTargetFolder: true
         OverWrite: true
         preserveTimestamp: true
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)
+        PathtoPublish: {{ PathtoPublish }}
         ArtifactName: release
         publishLocation: Container
     - task: Bash@3
