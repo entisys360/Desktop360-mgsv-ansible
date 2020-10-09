@@ -1,0 +1,13 @@
+---
+
+all:
+  children:
+    all:
+    citrix_roles::
+      vars:
+        ansible_group_priority: 9
+      children:
+        all:
+        vdi:
+        machine-catalog
+
