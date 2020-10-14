@@ -1,0 +1,13 @@
+---
+# Run playbooks for MVP 
+
+- import_playbook: playbooks/ansible_pipeline.yml
+  vars:
+    client_name: "qa"
+
+- import_playbook: playbooks/build_ansible_host.yml
+  vars:
+    client_name: "qa"
+
+...
+
