@@ -1,9 +1,6 @@
 ---
 # Run playbooks for MVP 
 
-ansible_pipeline.yml
-build_ansible_host.yml
-
 - import_playbook: playbooks/ansible_pipeline.yml
   vars:
     client_name: "qa"
