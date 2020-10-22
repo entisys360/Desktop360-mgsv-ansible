@@ -11,6 +11,9 @@ $timeZone = {{ timeZone }}
 $offPeakBuffer = {{ offPeakBuffer }}
 $peakBuffer = {{ peakBuffer }}
 $assignedGroup = {{ assignedGroup }}
+$CustomerID = {{ CustomerID }}
+$Secrets = {{ Secrets }}
+$ApiKey = {{ ApiKey }}
 
 #Machine Catalog
 $machineCatalogName = {{ machineCatalogName }}
@@ -18,6 +21,14 @@ $machineCatalogName = {{ machineCatalogName }}
 
 # Change to SilentlyContinue to avoid verbose output
 $VerbosePreference = "Continue"
+
+# Confrim that connection to Citrix Cloud is established before running script
+if ($null -eq (Get-PSSnapin -Name $snapinName -ErrorAction SilentlyContinue))  {
+
+        Add-PSSnapin -Name $snapinName -ErrorAction Stop;
+
+    }
+    Set-XDCredentials -CustomerId $CustomerID -ProfileType CloudToken -APIKey $ApiKey -SecretKey $Secrets
 
 # Create the Desktop Group
 # http://support.citrix.com/proddocs/topic/citrix-broker-admin-v2-xd75/new-brokerdesktopgroup-xd75.html
