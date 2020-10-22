@@ -11,7 +11,7 @@
       loop:
         - { j2: 'Connect-AztoCitrixHostConnection.j2', posh: 'Connect-AztoCitrixHostConnection.ps1' }
         - { j2: 'Machine_catalog.j2', posh: 'Machine_catalog.ps1' }
-        - { j2: '3rdScript.j2', posh: '3rdScript.ps1' }
+        - { j2: 'DeliveryGroup.j2', posh: 'DeliveryGroup.ps1' }
 
       # Running Script 1: Connect-AztoCitrixHostConnection.ps1
     - name: "Connect-AztoCitrixHostConnection.ps1" 
@@ -22,6 +22,6 @@
       ansible.windows.win_shell: c:\Machine_catalog.ps1 >> C:\somelog.txt
 
       # Running Script 3:.ps1
-    - name: "3rdScript.ps1"
-      ansible.windows.win_shell: c:\3rdScript.ps1 >> C:\somelog.txt
+    - name: "DeliveryGroup.ps1"
+      ansible.windows.win_shell: c:\DeliveryGroup.ps1 >> C:\somelog.txt
     
