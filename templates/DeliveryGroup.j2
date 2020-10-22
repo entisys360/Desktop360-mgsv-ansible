@@ -19,6 +19,9 @@ $ApiKey = {{ ApiKey }}
 $machineCatalogName = {{ machineCatalogName }}
 # ----------
 
+# Ensure the connection is made to Citrix Cloud
+Set-XDCredentials -CustomerId $CustomerID -ProfileType CloudToken -APIKey $ApiKey -SecretKey $Secrets
+
 # Change to SilentlyContinue to avoid verbose output
 $VerbosePreference = "Continue"
 
