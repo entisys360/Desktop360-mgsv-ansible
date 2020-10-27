@@ -1,8 +1,0 @@
----
-- hosts: localhost 
-  become: yes
-  gather_facts: false
-
-  tasks:
-    - name: get folder loc
-      shell: 'pwd'
