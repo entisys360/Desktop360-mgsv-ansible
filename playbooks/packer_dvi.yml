@@ -1,0 +1,10 @@
+---
+# Run Packer build to prepare VDI image
+
+- hosts: localhost
+
+  tasks: 
+    - name: " Packer build "
+      command: packer build ../roles/ansible-packer-role/files/.json
+
+...
