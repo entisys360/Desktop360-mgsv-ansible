@@ -1,4 +1,5 @@
 ---
+
 - hosts: linux
   become: yes
 
@@ -25,3 +26,5 @@
     - name: "DeliveryGroup.ps1"
       ansible.windows.win_shell: c:\DeliveryGroup.ps1 >> C:\somelog.txt
     
+...
+
