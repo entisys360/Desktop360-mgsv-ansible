@@ -1,0 +1,225 @@
+ <#
+.Synopsis
+   Connects Azure with Citrix Cloud
+.DESCRIPTION
+   The Connect-AZtoCitrixHostConnection cmdlet creates a connection host connection between Azure cloud and Citrix cloud.
+.EXAMPLE
+   Example of how to use this cmdlet
+   Connect-AZtoCitrixHostConnection -connectionName "ConnectionName" -applicationId "AppID" -applicationPassword "AppPass" -subscriptionId "SubscriptionID" -subscriptionName "SubscriptionName" -tenantId "TenantID"
+
+#>
+function Connect-AztoCitrixHostConnection
+{
+    [CmdletBinding()]
+    [OutputType([String])]
+    Param
+    (
+        # connectionName 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$connectionName,
+        
+        # ZoneName 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$ZoneName,
+
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$azureRegion,
+
+        #azureResourceGroup
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$azureResourceGroup,
+        
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$azureVNet,
+
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$azureSubnet,
+        
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$hostingName,
+        
+        # applicationId 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)] 
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$applicationId,
+
+        # applicationPassword 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)] 
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [String]$applicationPassword,
+
+        # subscriptionId 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)] 
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$subscriptionId,
+
+        # subscriptionName 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)] 
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$subscriptionName,
+
+        # tenantId 
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)] 
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$tenantId,
+
+	# CustomerID
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   ValueFromRemainingArguments=$false)]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateCount(1)]
+        [string]$CustomerId,
+	[string]$Secrets,
+	[string]$ApiKey
+        )
+        
+        Begin
+        {
+            # Ensure Citrix Powershell Snapin is installed. If it isnt, visit https://download.apps.cloud.com/CitrixPoshSdk.exe
+            try {Add-PsSnapin Citrix* -ErrorAction Stop}
+            catch {Throw "Citrix PsSnapin is not installed. Please visit https://download.apps.cloud.com/CitrixPoshSdk.exe to install"}
+        Set-XDCredentials -CustomerId $CustomerID -ProfileType CloudToken -APIKey $ApiKey -SecretKey $Secrets
+        }
+        Process
+        {
+        
+            try {
+# Create xml that will be used to establish citrix cloud connection to Azure
+$customProperties = @"
+<CustomProperties xmlns="http://schemas.citrix.com/2014/xd/machinecreation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <Property xsi:type="StringProperty" Name="AuthenticationAuthority" Value="https://login.microsoftonline.com/"/>
+ <Property xsi:type="StringProperty" Name="ManagementEndpoint" Value="https://management.azure.com/"/>
+ <Property xsi:type="StringProperty" Name="StorageSuffix" Value="core.windows.net"/>
+ <Property xsi:type="StringProperty" Name="TenantId" Value="$tenantId"/>
+ <Property xsi:type="StringProperty" Name="SubscriptionId" Value="$subscriptionId"/>
+ <Property xsi:type="StringProperty" Name="SubscriptionName" Value="$subscriptionName"/>
+</CustomProperties>
+"@
+                if( -not (Test-Path XDHyp:\Connections\$connectionName) ){
+                    
+                     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls12
+
+                     #Create splatting variable for connection
+
+                     $conn = @{
+                        ConnectionType = "Custom"
+                        CustomProperties = $customProperties
+                        HypervisorAddress =  @("https://management.azure.com/")
+                        Path =  @("XDHyp:\Connections\$connectionName")
+                        PluginId = "AzureRmFactory"
+                        Scope =  @() 
+                        SecurePassword = (ConvertTo-SecureString -AsPlainText -Force $applicationPassword)
+                        UserName = $applicationId
+                        ZoneUid = (Get-ConfigZone -Name $ZoneName).Uid
+                        Persist = $true
+                     }
+
+                    $connection = New-Item @conn
+                
+                    # Make connection and store in "$BrokerHypervisorConnection" variable
+                    New-BrokerHypervisorConnection -HypHypervisorConnectionUid $connection.HypervisorConnectionUid  -ErrorAction Stop
+                    
+                    #splatting variable for Resource item
+
+                    $resconn = @{
+                        HypervisorConnectionName = $connection.HypervisorConnectionName 
+                        NetworkPath = @("XDHyp:\Connections\$connectionName\$azureRegion.region\virtualprivatecloud.folder\$azureResourceGroup.resourcegroup\$azureVNet.virtualprivatecloud\$azureSubnet.network")
+                        Path = @("XDHyp:\HostingUnits\$hostingName") 
+                        PersonalvDiskStoragePath = @() 
+                        RootPath = "XDHyp:\Connections\$connectionName\$azureRegion.region" 
+                        StoragePath = @()
+                    }
+                    New-Item @resconn
+                    # Expose variable outside of function
+                    Write-Output $BrokerHypervisorConnection
+                
+                }
+
+               
+            }
+            catch
+            {
+            #Throw Write-Output $_.ErrorID
+             $_.Exception.Message
+            }
+        }
+    } 
+
+    #example to use this function
+    $param = @{
+        connectionName =  {{ connectionName }}
+        azureRegion = {{ azureRegion }}
+        azureResourceGroup = {{ azureResourceGroup }}
+        azureVNet = {{ azureVNet }}
+        azureSubnet = {{ azureSubnet }}  
+        hostingName = {{ hostingName }}
+        applicationId = {{ applicationId }}
+        applicationPassword = {{ applicationPassword }}
+        subscriptionId = {{ subscriptionId }}
+        subscriptionName = {{ subscriptionName }}
+        tenantId = {{ tenantId }}
+        ZoneName = {{ ZoneName }} 
+	CustomerID = {{ CustomerID }}
+	Secrets = {{ Secrets }}
+	ApiKey = {{ ApiKey }}
+    }
+
+
+Connect-AztoCitrixHostConnection @param

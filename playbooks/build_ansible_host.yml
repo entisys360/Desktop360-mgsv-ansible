@@ -1,4 +1,19 @@
 ---
 # Instal additional packages and complete host configuration 
+
+- hosts: localhost
+  gather_facts: yes
+
+  tasks:
+    - name: " Install the latest packages and dependencies "
+      dnf:
+        name: 
+          - python-pip3
+        #enablerepo: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+        state: latest
+
+  roles:
+    - role: ansible-role-packer
+
 ...
 
