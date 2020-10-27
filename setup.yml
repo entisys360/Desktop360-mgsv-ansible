@@ -1,17 +1,15 @@
 ---
 # Run playbooks for MVP 
 
-#- import_playbook: playbooks/build_ansible_host.yml
-#  vars:
-#    example_var-1: "none"
+- import_playbook: playbooks/build_ansible_host.yml
+# vars:
+#   example_var-1: "none"
+
+#- import_playbook: playbooks/landingzone.yml
 
 #- import_playbook: playbooks/packer_dvi.yml
-#  vars:
-#    example_var-2: "none"
 
 #- import_playbook: playbooks/triggerPosh.yml
-#  vars:
-#    example_var-3: "none"
 
 ...
 
