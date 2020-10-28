@@ -5,6 +5,6 @@
 
   tasks: 
     - name: " Packer build "
-      command: packer build templates/vdi_build.json
+      command: packer build /opt/ansible/templates/vdi_build.json
 
 ...
