@@ -4,7 +4,9 @@
 - hosts: localhost
 
   tasks: 
-    - name: " Packer build "
-      command: packer build templates/vdi_build.json
-
+    - name: "Populate Values to Paker Template"
+      template: 
+        src: ../templates/vdi_build.json.j2
+        dest: ../scripts/vdi_build.json
+    
 ...
