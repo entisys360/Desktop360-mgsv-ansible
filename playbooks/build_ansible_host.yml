@@ -12,8 +12,14 @@
         #enablerepo: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
         state: latest
 
+     - name: " Pip install Azure CLI "
+       pip:
+         executable: pip-3.3
+         name: azure
+         version: 4.0.0
+
   roles:
-    - role: ansible-role-packer
+    - role: ansible-role-hashicorp
 
 ...
 
