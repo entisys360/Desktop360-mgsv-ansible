@@ -1,0 +1,33 @@
+plugin: azure.azcollection.azure_rm
+auth_source: cli
+
+# fetches VMs from an explicit list of resource groups instead of default all (- '*')
+include_vm_resource_groups:
+- mvp-test
+
+include_vmss_resource_groups:
+- '*'
+
+# places a host in the named group if the associated condition evaluates to true
+conditional_groups:
+  all: true
+  # if the VM's "name" variable contains "entisys", it will be placed in the 'entisysVMs' group
+  entisysVMs: "'entisys' in name"
+  vdi_hosts: "'entisysVDI' in name"
+  dc_hosts: "'entisysDC' in name"
+  cc_hosts: "'entisyscc' in name"
+
+# places hosts in dynamically-created groups based on a variable value.
+keyed_groups:
+# places each host in a group named 'tag_(tag name)_(tag value)' for each tag on a VM.
+- prefix: tag
+  key: tags
+# places each host in a group named 'azure_loc_(location name)', depending on the VM's location
+- prefix: azure_loc
+  key: location
+
+# excludes a host from the inventory when any of these expressions is true, can refer to any vars defined on the host
+exclude_host_filters:
+# excludes hosts that are powered off
+- powerstate != 'running'
+
