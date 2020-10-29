@@ -23,7 +23,10 @@
         version: 4.0.0
 
     - name: " Enable and start postfix server "
-      command: systemctl enable postfix && systemctl start postfix
+      command: "{{ item }}"
+      with_items:
+      - sudo systemctl enable postfix
+      - sudo systemctl start postfix
 
     - name: " Install azure.azcollection.azure_rm using Ansible Galaxy "
       command: ansible-galaxy collection install azure.azcollection
