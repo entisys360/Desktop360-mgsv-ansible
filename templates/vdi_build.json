@@ -2,10 +2,10 @@
     "builders": [{
       "type": "azure-arm",
   
-      "client_id": "fcf428c1-93a4-48ae-baf4-f8d6f4eba0e2",
-      "client_secret": ".UtMU~N-0t70nUEZkNVx2Zks~m3~SBegpR",
-      "tenant_id": "9c098977-6fd6-46bd-a109-6d983952bd01",
-      "subscription_id": "760a0941-f66f-4158-9521-c2ef5b730f07",
+      "client_id": "",
+      "client_secret": "",
+      "tenant_id": "",
+      "subscription_id": "",
   
       "build_resource_group_name": "ImageBakery",
       "managed_image_resource_group_name": "rg-packerimages",
