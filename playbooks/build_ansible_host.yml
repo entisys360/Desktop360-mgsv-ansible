@@ -20,6 +20,9 @@
         name: azure
         version: 4.0.0
 
+    - name: " Install azure.azcollection.azure_rm using Ansible Galaxy "
+      command: ansible-galaxy collection install azure.azcollection
+
   roles:
     - role: ansible-role-hashicorp
 
