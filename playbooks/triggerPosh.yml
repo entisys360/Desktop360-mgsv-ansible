@@ -1,6 +1,6 @@
 ---
 
-- hosts: linux
+- hosts: entisysVDI
   become: yes
 
   tasks:
