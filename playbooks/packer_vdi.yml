@@ -4,7 +4,13 @@
 - hosts: localhost
 
   tasks: 
+    - name: "Convert powershell scripts from jinja2 template"
+      template:
+        src: /templates/vdi_build.j2
+        dest: /scripts/vdi_build.json
+
     - name: " Packer build "
-      command: packer build /opt/ansible/templates/vdi_build.json
+      command: packer build /opt/ansible/scripts/vdi_build.json
 
 ...
+
