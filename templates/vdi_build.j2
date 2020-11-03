@@ -10,10 +10,10 @@
       "build_resource_group_name": "ImageBakery",
       "managed_image_resource_group_name": "rg-packerimages",
       "managed_image_name": "entpackerimage19h1v3",
-      "virtual_network_name": "citrix-vnet",
-      "virtual_network_subnet_name": "default",
+      "virtual_network_name": "{{ vdi_virtual_network_name }}",
+      "virtual_network_subnet_name": "{{ vdi_virtual_network_subnet_name }}",
       "private_virtual_network_with_public_ip": true,
-      "virtual_network_resource_group_name": "citrix",
+      "virtual_network_resource_group_name": "{{ vdi_virtual_network_resource_group_name }}",
       "managed_image_os_disk_snapshot_name": "entpackerimage19h1v3",
       "os_type": "Windows",
       "image_publisher": "MicrosoftWindowsDesktop",
@@ -30,7 +30,7 @@
           "dept": "Engineering",
           "task": "Image deployment"
       },
-      "vm_size": "Standard_D2_v2",
+      "vm_size": "{{ vdi_vm_size }}",
       "async_resourcegroup_delete":true
     }],
     "provisioners": [
