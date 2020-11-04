@@ -1,7 +1,7 @@
 ![Logo of the project](/docs/images/logo.sample.png)
 
-# Git Repository Template
-> A template repository that adheres to Entisys360's Git standards
+# Entisys360 Ansible repository
+> An Ansible repository that adheres to Entisys360's Git standards
 
 This repository is a template for initializing new git repositories or importing existing work.
 
