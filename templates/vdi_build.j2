@@ -2,10 +2,10 @@
     "builders": [{
       "type": "azure-arm",
   
-      "client_id": "{{ clientID }}",
-      "client_secret": "{{ clientSecret }}",
-      "tenant_id": "{{ tenantID }}",
-      "subscription_id": "{{ subscriptionID }}",
+      "client_id": "e360Client",
+      "client_secret": "e360ClientSecret",
+      "tenant_id": "{{ tenantId }}",
+      "subscription_id": "{{ subscriptionId }}",
   
       "build_resource_group_name": "ImageBakery",
       "managed_image_resource_group_name": "rg-packerimages",
@@ -13,7 +13,7 @@
       "virtual_network_name": "{{ virtualNetworkName }}",
       "virtual_network_subnet_name": "{{ subnet0Name }}",
       "private_virtual_network_with_public_ip": true,
-      "virtual_network_resource_group_name": "{{ virtualNetworkResourceGroupName }}",
+      "virtual_network_resource_group_name": "{{ NetworkResourceGroupName }}",
       "managed_image_os_disk_snapshot_name": "entpackerimage19h1v3",
       "os_type": "Windows",
       "image_publisher": "MicrosoftWindowsDesktop",
