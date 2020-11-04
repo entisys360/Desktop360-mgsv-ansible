@@ -1,6 +1,6 @@
 ---
 
-- hosts: entisysVDI
+- hosts: e360CCprimary
   become: yes
 
   tasks:
