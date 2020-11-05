@@ -11,8 +11,6 @@
           - python3-pip
           - python3-devel
           - gcc
-          - postfix
-          - mailx
         #enablerepo: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
         state: latest
 
@@ -21,12 +19,6 @@
         executable: pip3
         name: azure
         version: 4.0.0
-
-    - name: " Enable and start postfix server "
-      command: "{{ item }}"
-      with_items:
-      - sudo systemctl enable postfix
-      - sudo systemctl start postfix
 
     - name: " Install azure.azcollection.azure_rm using Ansible Galaxy "
       command: ansible-galaxy collection install azure.azcollection
