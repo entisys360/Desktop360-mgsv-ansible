@@ -1,0 +1,72 @@
+---
+- hosts: all 
+  gather_facts: no
+  tasks:
+  - name: Install Chocolety on Windows Server 2016
+    win_chocolatey: name=procexp state=absent
+  
+  - name: Install AD Powershell Module
+    win_feature:
+      name:  RSAT-AD-PowerShell
+      state: present
+  
+  - name: Install IIS (Web-Server only)
+    win_feature:
+      name: Web-Server
+      state: present
+  
+  - name: Install Web ASP
+    win_feature:
+      name:  Web-Asp-Net45
+      state: present
+
+  - name: Install Web Console
+    win_feature:
+      name:  Web-Mgmt-Console
+      state: present
+  
+  - name: Set a dns clients settings to point domain controller
+    win_dns_client:
+      adapter_names: "*"
+      ipv4_addresses: 10.0.1.4
+  
+  - name: Domain Join cloudconnectors
+    win_domain_membership:
+      dns_domain_name: e360labs.local
+      domain_admin_user: vsanjivaiah@e360labs.local
+      domain_admin_password: rit123ABC!@
+      state: domain
+    register: domain_state
+  
+  - name: Reboot After Domain Join
+    win_reboot:
+      msg: "Joining Domain Reboot"
+    when: domain_state.reboot_required
+  
+  - name: Copy Cloud Connector DSC Module
+    ansible.windows.win_copy:
+      src: files/CloudConnector
+      dest: C:\Windows\System32\WindowsPowerShell\v1.0\Modules
+  
+  - name: Desable IE Security for Administrators
+    ansible.windows.win_regedit:
+      path: HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}
+      name: IsInstalled
+      data: 0
+      type: dword
+  
+  - name: Desable IE Security for users
+    ansible.windows.win_regedit:
+      path: HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}
+      name: IsInstalled
+      data: 0
+      type: dword
+ 
+  - name: Install Cloud Connector and register in Citrix Cloud
+    ansible.windows.win_dsc:
+      resource_name:  CloudConnector
+      CustomerId: entisys
+      APIClientID:  b92c5c6d-3860-4e90-bc1c-9839ba367c3c
+      APIClientSecret:  rkQVmGsRFd177eGg1nHeww==
+      ResourceLocation: e360labs - Devops
+      ConnectorDowloadPath: c:\
