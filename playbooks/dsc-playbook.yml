@@ -32,9 +32,9 @@
   
   - name: Domain Join cloudconnectors
     win_domain_membership:
-      dns_domain_name: e360labs.local
-      domain_admin_user: vsanjivaiah@e360labs.local
-      domain_admin_password: rit123ABC!@
+      dns_domain_name: "{{  }}"
+      domain_admin_user: "{{  }}"
+      domain_admin_password: "{{  }}"
       state: domain
     register: domain_state
   
@@ -65,8 +65,8 @@
   - name: Install Cloud Connector and register in Citrix Cloud
     ansible.windows.win_dsc:
       resource_name:  CloudConnector
-      CustomerId: entisys
-      APIClientID:  b92c5c6d-3860-4e90-bc1c-9839ba367c3c
-      APIClientSecret:  rkQVmGsRFd177eGg1nHeww==
-      ResourceLocation: e360labs - Devops
+      CustomerId: "{{  }}"
+      APIClientID:  "{{  }}"
+      APIClientSecret:  "{{  }}"
+      ResourceLocation: "{{  }}"
       ConnectorDowloadPath: c:\
