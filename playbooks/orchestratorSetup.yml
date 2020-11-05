@@ -2,6 +2,7 @@
 # Instal additional packages and complete host configuration 
 
 - hosts: localhost
+  become: yes
   gather_facts: yes
 
   tasks:
@@ -19,6 +20,12 @@
         executable: pip3
         name: azure
         version: 4.0.0
+
+    - name: " Pip install additional packages "
+      pip:
+        executable: pip3
+        name: pywinrm
+        version: latest
 
     - name: " Install azure.azcollection.azure_rm using Ansible Galaxy "
       command: ansible-galaxy collection install azure.azcollection

@@ -4,6 +4,7 @@
 - hosts: localhost
 
   tasks: 
+    - include_vars: ../inventory/hosts.yml
     - name: " Convert Powershell scripts from jinja2 template "
       template:
         src: ../templates/vdi_build.j2
