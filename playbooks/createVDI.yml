@@ -10,7 +10,7 @@
         dest: ../scripts/vdi_build.json
 
     - name: " Packer build "
-      command: packer build /opt/ansible/scripts/vdi_build.json
+      command: packer build ../scripts/vdi_build.json
 
 ...
 
