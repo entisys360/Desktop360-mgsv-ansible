@@ -1,6 +1,7 @@
 all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
+    CustomerId: entisys
     tenantId: "9c098977-6fd6-46bd-a109-6d983952bd01"
     subscriptionId: "3e974a5c-42e9-4191-ad4a-00eb47e1d717"
     virtualNetworkName: "Citrix-Vnet"
