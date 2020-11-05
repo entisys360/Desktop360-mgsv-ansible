@@ -2,9 +2,6 @@
 - hosts: all 
   gather_facts: no
   tasks:
-  - name: Install Chocolety on Windows Server 2016
-    win_chocolatey: name=procexp state=absent
-  
   - name: Install AD Powershell Module
     win_feature:
       name:  RSAT-AD-PowerShell
@@ -24,24 +21,6 @@
     win_feature:
       name:  Web-Mgmt-Console
       state: present
-  
-  - name: Set a dns clients settings to point domain controller
-    win_dns_client:
-      adapter_names: "*"
-      ipv4_addresses: 10.0.1.4
-  
-  - name: Domain Join cloudconnectors
-    win_domain_membership:
-      dns_domain_name: "{{  }}"
-      domain_admin_user: "{{  }}"
-      domain_admin_password: "{{  }}"
-      state: domain
-    register: domain_state
-  
-  - name: Reboot After Domain Join
-    win_reboot:
-      msg: "Joining Domain Reboot"
-    when: domain_state.reboot_required
   
   - name: Copy Cloud Connector DSC Module
     ansible.windows.win_copy:

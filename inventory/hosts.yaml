@@ -8,3 +8,6 @@ all:
     subnet0Name: "Managment"
     NetworkResourceGroupName: "mvp-test"
     VDIVMSize: "Standard_D2_v2"
+    dns_domain_name: e360labs.local
+    ResourceLocation: e360labs - Devops
+
