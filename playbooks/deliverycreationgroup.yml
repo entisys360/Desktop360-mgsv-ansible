@@ -1,9 +1,9 @@
 ---
 
-- hosts: 'windows'
+- hosts: 'entisyscc1'
 
   tasks:
-      # This will convert all Powershell scripts from /templates folder into Powershell scripts and move them to /scripts folder
+      # This will convert all Powershell script
 
     - name: "Convert powershell scripts from jinja2 template"
       template:
@@ -12,4 +12,4 @@
 
       # Running Script 1: Connect-AztoCitrixHostConnection.ps1
     - name: "DeliveryGroup"
-      ansible.windows.win_shell: c:\DeliveryGroup.ps1
+      win_shell: c:\DeliveryGroup.ps1 >> C:\somelog.txt
