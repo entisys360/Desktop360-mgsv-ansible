@@ -1,0 +1,15 @@
+---
+
+- hosts: 'windows'
+
+  tasks:
+      # This will convert all Powershell scripts from /templates folder into Powershell scripts and move them to /scripts folder
+
+    - name: "Convert powershell scripts from jinja2 template"
+      template:
+        src: '../templates/Machine_catalog.j2'
+        dest: 'c:\Machine_catalog.j2.ps1'
+
+      # Running Script 1: Connect-AztoCitrixHostConnection.ps1
+    - name: "Machine_catalog.ps1"
+      ansible.windows.win_shell: c:\Machine_catalog.ps1 
