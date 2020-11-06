@@ -24,6 +24,7 @@ Set-XDCredentials -CustomerId $CustomerID -ProfileType CloudToken -APIKey $ApiKe
 
 # Change to SilentlyContinue to avoid verbose output
 $VerbosePreference = "Continue"
+$assignedGroup = $assignedGroup.Replace("\\","\") 
 
 # Confrim that connection to Citrix Cloud is established before running script
 if ($null -eq (Get-PSSnapin -Name $snapinName -ErrorAction SilentlyContinue))  {
