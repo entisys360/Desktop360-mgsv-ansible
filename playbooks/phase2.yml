@@ -1,0 +1,7 @@
+---
+# Execute playbooks for second phase
+- import_playbook: playbooks/citrixcloudhosting.yml
+- import_playbook: playbooks/cloudconnector.yml
+- import_playbook: playbooks/machinecatalog.yml
+- import_playbook: playbooks/deliverycreationgroup.yml
+...
