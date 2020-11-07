@@ -1,14 +1,14 @@
 ---
 
-- hosts: entisyscc2 
+- hosts: e360cc_hosts 
 
   tasks:
     - name: " List in Win shell "
-      ansible.windows.win_shell: ls
+      win_shell: dir
 
-- name: Run a command under a non-Powershell interpreter (cmd in this case)
-  ansible.windows.win_shell: echo %HOMEDIR%
-  args:
-    executable: cmd
-  register: homedir_out
+      #- name: Run a command under a non-Powershell interpreter (cmd in this case)
+      #  ansible.windows.win_shell: echo %HOMEDIR%
+      #  args:
+      #    executable: cmd
+      #  register: homedir_out
 
