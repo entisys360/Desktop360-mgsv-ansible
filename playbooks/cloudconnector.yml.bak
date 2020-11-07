@@ -44,8 +44,8 @@
   - name: Install Cloud Connector and register in Citrix Cloud
     win_dsc:
       resource_name:  CloudConnector
-      CustomerId: "entisys"
-      APIClientID:  "b92c5c6d-3860-4e90-bc1c-9839ba367c3c"
-      APIClientSecret:  "rkQVmGsRFd177eGg1nHeww=="
-      ResourceLocation: "e360labs - Devops"
+      CustomerId: "{{  }}"
+      APIClientID:  "{{  }}"
+      APIClientSecret:  "{{  }}"
+      ResourceLocation: "{{  }}"
       ConnectorDowloadPath: 'c:\'

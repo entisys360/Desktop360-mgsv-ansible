@@ -1,0 +1,20 @@
+all:
+  hosts:
+    entisyscc1:
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_user: vsanjivaiah
+    ansible_password: rit123ABC!@
+    CustomerId: entisys
+    tenantId: "9c098977-6fd6-46bd-a109-6d983952bd01"
+    subscriptionId: "3e974a5c-42e9-4191-ad4a-00eb47e1d717"
+    virtualNetworkName: "Citrix-Vnet"
+    subnet0Name: "Managment"
+    NetworkResourceGroupName: "mvp-test"
+    VDIVMSize: "Standard_D2_v2"
+    dns_domain_name: e360labs.local
+    domain_admin_user: vsanjivaiah@e360labs.local
+    domain_admin_password: rit123ABC!@
+    APIClientID:  b92c5c6d-3860-4e90-bc1c-9839ba367c3c
+    APIClientSecret:  rkQVmGsRFd177eGg1nHeww==
+    ResourceLocation: e360labs - Devops

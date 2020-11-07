@@ -1,8 +1,0 @@
-[entisyscc1]
-192.168.1.5
-
-[entisyscc1:vars]
-ansible_user='superadmin'
-ansible_password='rit123ABC!@#$%^'
-ansible_connection=winrm
-ansible_winrm_server_cert_validation=ignore
