@@ -90,3 +90,6 @@ $RECYCLE.BIN/
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+
+hosts.yml
+hosts.yaml

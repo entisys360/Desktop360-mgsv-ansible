@@ -1,0 +1,14 @@
+---
+
+- hosts: 'entisyscc1' 
+
+  tasks:
+      # This will convert all Powershell script
+    - name: "Convert powershell scripts from jinja2 template"
+      template:
+        src: '../templates/Connect-AztoCitrixHostConnection.j2'
+        dest: 'c:\Connect-AztoCitrixHostConnection.ps1'
+
+      # Running Script 1: Connect-AztoCitrixHostConnection.ps1
+    - name: "Connect-AztoCitrixHostConnection.ps1"
+      win_shell: Connect-AztoCitrixHostConnection.ps1 >> C:\somelog.txt

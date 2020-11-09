@@ -1,0 +1,15 @@
+---
+
+- hosts: 'entisyscc1'
+
+  tasks:
+      # This will convert all Powershell script
+
+    - name: "Convert powershell scripts from jinja2 template"
+      template:
+        src: '../templates/DeliveryGroup.j2'
+        dest: 'c:\DeliveryGroup.ps1'
+
+      # Running Script 1: Connect-AztoCitrixHostConnection.ps1
+    - name: "DeliveryGroup"
+      win_shell: c:\DeliveryGroup.ps1 >> C:\somelog.txt

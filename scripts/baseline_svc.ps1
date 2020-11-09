@@ -286,4 +286,10 @@ Configuration baseline_svc {
 
 baseline_svc
 
+<<<<<<< HEAD
 Start-DscConfiguration  -Path .\baseline_svc -ComputerName localhost -Verbose -Wait -Force
+=======
+Start-DscConfiguration  -Path .\baseline_svc -ComputerName localhost -Verbose -Wait -Force
+
+
+>>>>>>> develop

@@ -1,15 +1,9 @@
 ---
-# Run playbooks for MVP 
+# Run Initial playbooks
 
-- import_playbook: playbooks/build_ansible_host.yml
+- import_playbook: playbooks/orchestratorSetup.yml
 # vars:
 #   example_var-1: "none"
-
-#- import_playbook: playbooks/landingzone.yml
-
-#- import_playbook: playbooks/packer_dvi.yml
-
-#- import_playbook: playbooks/triggerPosh.yml
 
 ...
 
