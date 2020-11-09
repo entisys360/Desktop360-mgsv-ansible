@@ -10,8 +10,8 @@
         src: ../templates/vdi_build.j2
         dest: ../scripts/vdi_build.json
 
-    - name: " Packer build "
-      command: packer build ../scripts/vdi_build.json
+ #   - name: " Packer build "
+ #     command: packer build ../scripts/vdi_build.json
 
 ...
 
