@@ -5,9 +5,12 @@
   become: yes
   vars:
     packerProjectPath: "/opt/packer/vdi"
+    virtualNetworkName: "Citrix-Vnet"
+    subnet0Name: "Managment"
+    NetworkResourceGroupName: "E360VDILABS2"
+    VDIVMSize: "Standard_D2_v2"
 
   tasks: 
-#   - include_vars: ../inventory/hosts.yaml
 
     - name: " Create Packer execution directory "
       file:
@@ -16,10 +19,10 @@
         mode: '775'
         state: directory
 
-#   - name: " Convert Powershell scripts from jinja2 template "
-#     template:
-#       src: ../templates/vdi_build.j2
-#       dest: {{ packerProjectPath }}/vdi_build.json
+    - name: " Convert Powershell scripts from jinja2 template "
+      template:
+        src: ../templates/vdi_build.j2
+        dest: {{ packerProjectPath }}/vdi_build.json
 
     - name: " Copy vdi scripts to {{ packerProjectPath }} "
       copy:
