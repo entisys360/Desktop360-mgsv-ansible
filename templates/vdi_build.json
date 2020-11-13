@@ -1,13 +1,13 @@
 {
     "builders": [{
       "type": "azure-arm",
-      "build_resource_group_name": "ImageBakery",
+      "build_resource_group_name": "E360VDILABS2",
       "managed_image_resource_group_name": "rg-packerimages",
       "managed_image_name": "entpackerimage19h1v3",
-      "virtual_network_name": "{{ virtualNetworkName }}",
-      "virtual_network_subnet_name": "{{ subnet0Name }}",
+      "virtual_network_name": "Citrix-Vnet",
+      "virtual_network_subnet_name": "Managment",
       "private_virtual_network_with_public_ip": true,
-      "virtual_network_resource_group_name": "{{ NetworkResourceGroupName }}",
+      "virtual_network_resource_group_name": "E360VDILABS2",
       "managed_image_os_disk_snapshot_name": "entpackerimage19h1v3",
       "os_type": "Windows",
       "image_publisher": "MicrosoftWindowsDesktop",
@@ -24,7 +24,7 @@
           "dept": "Engineering",
           "task": "Image deployment"
       },
-      "vm_size": "{{ VDIVMSize }}",
+      "vm_size": "Standard_D2_v2",
       "async_resourcegroup_delete": true
     }],
     "provisioners": [
@@ -61,7 +61,7 @@
         "choco feature enable -n=allowGlobalConfirmation",
         "choco install notepadplusplus",
         "while ((Get-Service RdAgent).Status -ne 'Running') { Start-Sleep -s 5 }",
-        "while ((Get-Service WindowsAzureGuestAgent).Status -ne 'Running') { Start-Sleep -s 5 }",
+        "while ((Get-Service WindowsAzureGuestAgent).Status -ne 'Running') { Start-Sleep -s 5 }"
       ]
     }]
   }

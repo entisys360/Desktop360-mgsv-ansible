@@ -33,7 +33,7 @@
       - vdi.ps1
 
     - name: " Packer build "
-      command: packer build vdi_build.json
+      command: /usr/local/bin/packer build vdi_build.json
       args:
         chdir: "{{ packerProjectPath }}/"
 
