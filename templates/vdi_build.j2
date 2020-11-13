@@ -25,7 +25,7 @@
           "task": "Image deployment"
       },
       "vm_size": "{{ VDIVMSize }}",
-      "async_resourcegroup_delete":true
+      "async_resourcegroup_delete": true
     }],
     "provisioners": [
       {
@@ -37,22 +37,22 @@
       },
       {
         "type": "powershell",
-        "script": ".\\scripts\\installs.ps1"
+        "script": "./scripts/installs.ps1"
       },
       {
         "type": "powershell",
         "execution_policy": "unrestricted",
-        "script": ".\\scripts\\vda.ps1"
+        "script": "./scripts/vda.ps1"
       },
       {
         "type": "powershell",
         "execution_policy": "unrestricted",
-        "script": ".\\scripts\\baseline_svc.ps1"
+        "script": "./scripts/baseline_svc.ps1"
       },
       {
         "type": "powershell",
         "execution_policy": "unrestricted",
-        "script": ".\\scripts\\baseline_features.ps1"
+        "script": "./scripts/baseline_features.ps1"
       },
       {
       "type": "powershell",
@@ -61,7 +61,7 @@
         "choco feature enable -n=allowGlobalConfirmation",
         "choco install notepadplusplus",
         "while ((Get-Service RdAgent).Status -ne 'Running') { Start-Sleep -s 5 }",
-        "while ((Get-Service WindowsAzureGuestAgent).Status -ne 'Running') { Start-Sleep -s 5 }",
+        "while ((Get-Service WindowsAzureGuestAgent).Status -ne 'Running') { Start-Sleep -s 5 }"
       ]
     }]
   }

@@ -2,16 +2,43 @@
 # Run Packer build to prepare VDI image
 
 - hosts: localhost
+  become: yes
+  vars:
+    packerProjectPath: "/opt/packer/vdi"
+    virtualNetworkName: "Citrix-Vnet"
+    subnet0Name: "Managment"
+    NetworkResourceGroupName: "E360VDILABS2"
+    VDIVMSize: "Standard_D2_v2"
 
   tasks: 
-    - include_vars: ../inventory/hosts.yaml
+
+    - name: " Create Packer execution directory "
+      file:
+        path: "{{ packerProjectPath }}"
+        group: adm
+        mode: '775'
+        state: directory
+
     - name: " Convert Powershell scripts from jinja2 template "
       template:
         src: ../templates/vdi_build.j2
-        dest: ../scripts/vdi_build.json
+        dest: "{{ packerProjectPath }}/vdi_build.json"
 
- #   - name: " Packer build "
- #     command: packer build ../scripts/vdi_build.json
+    - name: " Copy vdi scripts to {{ packerProjectPath }} "
+      copy:
+        src: ../scripts/{{ item }}
+        dest: "{{ packerProjectPath }}/scripts/"
+      with_items:
+      - baseline_features.ps1
+      - baseline_svc.ps1
+      - installs.ps1
+      - vda.ps1
+      - vdi.ps1
+
+    - name: " Packer build "
+      command: /usr/local/bin/packer build vdi_build.json
+      args:
+        chdir: "{{ packerProjectPath }}/"
 
 ...
 

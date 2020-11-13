@@ -1,0 +1,35 @@
+plugin: azure.azcollection.azure_rm
+auth_source: msi
+
+# fetches VMs from an explicit list of resource groups instead of default all (- '*')
+include_vm_resource_groups:
+- mvp-test
+#- '*'
+#- {{ citrixResourceGroup }}
+
+#include_vmss_resource_groups:
+#- '*'
+
+# places a host in the named group if the associated condition evaluates to true
+conditional_groups:
+  all: true
+  # if the VM's "name" variable contains "entisys", it will be placed in the 'entisysVMs' group
+  e360_hosts: "'e360' in name"
+  e360vdi_hosts: "'e360VDI' in name"
+  e360dc_hosts: "'e360DC' in name"
+  e360cc_hosts: "'e360CC' in name"
+  e360cc_hosts: "'entisyscc1' in name"
+
+# places hosts in dynamically-created groups based on a variable value.
+keyed_groups:
+# places each host in a group named 'tag_(tag name)_(tag value)' for each tag on a VM.
+- prefix: e360
+  key: e360ServerRole
+# places each host in a group named 'azure_loc_(location name)', depending on the VM's location
+- prefix: azure_loc
+  key: location
+
+# excludes a host from the inventory when any of these expressions is true, can refer to any vars defined on the host
+exclude_host_filters:
+# excludes hosts that are powered off
+- powerstate != 'running'
