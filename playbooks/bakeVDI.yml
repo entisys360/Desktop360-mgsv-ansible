@@ -5,9 +5,11 @@
   become: yes
   vars:
     packerProjectPath: "/opt/packer/vdi"
-    virtualNetworkName: "Citrix-Vnet"
-    subnet0Name: "Managment"
     NetworkResourceGroupName: "E360VDILABS2"
+    BuildResourceGroupName: "E360VDILABS2"
+    ImageResourceGroupName: "E360VDILABS2"
+    virtualNetworkName: "Citrix-Vnet"
+    subnet0Name: "VirtualDesktops"
     VDIVMSize: "Standard_D2_v2"
 
   tasks: 
