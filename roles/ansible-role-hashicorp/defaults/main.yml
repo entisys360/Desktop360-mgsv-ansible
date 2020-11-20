@@ -1,6 +1,8 @@
 ---
 packer_version: "1.6.5"
-terraform_version: "0.12.29"
+terraform_version: "0.12.24"
+consul_version: "1.8.6"
+vault_version: "1.6.0"
 package_arch: "amd64"
 package_bin_path: /usr/local/bin
 ...

@@ -9,6 +9,7 @@
     remote_src: true
     creates: "{{ package_bin_path }}/packer"
     mode: 0755
+# when: packer | default(False)
 
 - name: Download and unarchive Terraform.
   unarchive:
@@ -17,4 +18,23 @@
     remote_src: true
     creates: "{{ package_bin_path }}/terraform"
     mode: 0755
+  when: terraform | default(False)
+
+- name: Download and unarchive Consul.
+  unarchive:
+    src: https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_{{ package_arch }}.zip
+    dest: "{{ package_bin_path }}"
+    remote_src: true
+    creates: "{{ package_bin_path }}/consul"
+    mode: 0755
+  when: consul | default(False)
+
+- name: Download and unarchive Vault.
+  unarchive:
+    src: https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_{{ package_arch }}.zip
+    dest: "{{ package_bin_path }}"
+    remote_src: true
+    creates: "{{ package_bin_path }}/vault"
+    mode: 0755
+  when: vault | default(False)
 
