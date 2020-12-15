@@ -1,0 +1,40 @@
+---
+
+- name: " Ansible Vault playbook "
+  hosts: localhost
+  vars:
+    vault_file: "~/.vault_pass.txt"
+
+  vars_prompt:
+
+    - name: vault_password
+      prompt: " Enter a password for your Ansible Vault "
+      private: yes
+      when: vault_password is not defined
+
+  tasks: 
+
+  - name: " Awful way to encrypt files "
+    command: /usr/local/bin/ansible-vault encrypt {{ item }} --vault-password-file {{ vault_file }}
+    with_items:
+    - dg.json
+    - hc.json
+    - mc.json
+
+  - name: " Put the secrets text in the tmp directory on the remote server "
+    copy:
+      content="{{secret_text}}"
+      dest=/secret_text.txt
+
+  - name: " Remove source file "
+    file:
+      state: absent
+      path: {{ item }}
+    with_items:
+    - dg.json
+    - hc.json
+    - mc.json
+    when: remove_source | default(False)
+
+...
+
